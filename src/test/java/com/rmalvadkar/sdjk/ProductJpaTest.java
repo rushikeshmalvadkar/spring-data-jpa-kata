@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class ProductJpaTest extends AbstractJpaTest {
@@ -21,11 +22,9 @@ public class ProductJpaTest extends AbstractJpaTest {
 
     @Test
     void should_create_bew_product() {
-        ProductEntity productEntity = new ProductEntity();
-        productEntity.setName("rushilesh");
-        ProductEntity savedProductEntity = productRepo.save(productEntity);
+        ProductEntity newProductEntity = createNewProduct();
 
-        Optional<ProductEntity> productEntityOpt = productRepo.findById(savedProductEntity.getId());
+        Optional<ProductEntity> productEntityOpt = productRepo.findById(newProductEntity.getId());
         assertThat(productEntityOpt).isPresent();
         assertThat(productEntityOpt.get())
                 .extracting(ProductEntity::getName)
@@ -33,4 +32,33 @@ public class ProductJpaTest extends AbstractJpaTest {
 
 
     }
+
+    private ProductEntity createNewProduct() {
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setName("rushilesh");
+        ProductEntity savedProductEntity = productRepo.save(productEntity);
+        return savedProductEntity;
+    }
+
+    @Test
+    void should_update_product(){
+        Optional<ProductEntity> productEntityBeforeUpdateOpt = productRepo.findById(1L);
+        assertTrue(productEntityBeforeUpdateOpt.isPresent());
+       ProductEntity productEntity = productEntityBeforeUpdateOpt.get();
+       productEntity.setName("abhi");
+
+        ProductEntity updatedProduct = productRepo.save(productEntity);
+
+        Optional<ProductEntity> updatedProductOpt = productRepo.findById(updatedProduct.getId());
+
+        assertThat(updatedProductOpt).isPresent();
+        assertThat(updatedProductOpt.get())
+                .extracting(ProductEntity::getName)
+                .isEqualTo("abhi");
+
+
+
+
+    }
+
 }

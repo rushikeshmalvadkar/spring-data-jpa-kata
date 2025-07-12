@@ -1,7 +1,6 @@
 package com.rmalvadkar.sdjk.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +12,7 @@ public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;// this i smy code
+    private Long id;
 
     private String name;
 }
