@@ -13,7 +13,7 @@ public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;// this i smy code
+    private int id;// this i smy code
 
     private String name;
 }
